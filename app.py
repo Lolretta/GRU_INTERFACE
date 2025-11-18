@@ -38,7 +38,6 @@ def create_sequences(data, seq_length):
 
 @st.cache_resource
 def load_trained_model():
-    # Intenta primero el formato .keras y luego .h5
     try:
         model = load_model("gru_pm25_model.keras")
     except Exception:
@@ -121,13 +120,8 @@ entrenado para predecir la concentración de PM2.5.
 
 # Sidebar
 st.sidebar.header("Parámetros")
-seq_length = st.sidebar.number_input(
-    "Ventana temporal (horas previas)",
-    min_value=3,
-    max_value=48,
-    value=SEQ_LENGTH_DEFAULT,
-    step=1
-)
+seq_length = 6
+
 n_future = st.sidebar.number_input(
     "Horas futuras a pronosticar",
     min_value=1,
@@ -148,10 +142,6 @@ n_mc_iter = st.sidebar.number_input(
     max_value=300,
     value=100,
     step=10
-)
-
-st.sidebar.info(
-    "Asegúrate de tener en la misma carpeta: contamination.csv, gru_pm25_model.keras o .h5 y scaler.pkl."
 )
 
 # ==============================
